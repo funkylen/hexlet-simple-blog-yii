@@ -103,4 +103,16 @@ class PostCest
     {
         // TODO: Реализовать тест на удаление
     }
+
+    public function createPostWithInvalidValues(FunctionalTester $I): void
+    {
+        $I->amOnRoute('post/create');
+
+        $I->submitForm('form', [
+        ]);
+
+        $I->dontSeeRecord(Post::class, [
+            'title' => '',
+        ]);
+    }
 }
