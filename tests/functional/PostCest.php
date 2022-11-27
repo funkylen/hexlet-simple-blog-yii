@@ -5,6 +5,7 @@ namespace functional;
 use app\fixtures\PostFixture;
 use app\models\Post;
 use FunctionalTester;
+use yii\helpers\Url;
 
 class PostCest
 {
@@ -101,7 +102,14 @@ class PostCest
 
     public function deletePost(FunctionalTester $I): void
     {
-        // TODO: Реализовать тест на удаление
+        $uri = Url::to([
+            '/post/delete',
+            'id' => 10000,
+        ]);
+
+        $I->sendAjaxPostRequest($uri);
+
+        $I->dontSeeRecord(Post::class, ['id' => 10000]);
     }
 
     public function createPostWithInvalidValues(FunctionalTester $I): void
