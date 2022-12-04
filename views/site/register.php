@@ -9,12 +9,12 @@
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 
-$this->title = 'Login';
+$this->title = 'Register';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= $this->render('_auth-form', ['model' => $model]) ?>
 
 <div class="mt-3">
-    <p>No account? <?= Html::a('Register', Url::toRoute('/site/register')) ?></p>
+    <p>Have account? <?= Html::a('Login', Url::toRoute('/site/login')) ?></p>
 </div>
