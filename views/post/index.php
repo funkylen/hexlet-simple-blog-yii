@@ -14,11 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="post-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+  <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Post', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php
+    if (!Yii::$app->user->isGuest): ?>
+      <p>
+          <?= Html::a('Create Post', ['create'], ['class' => 'btn btn-success']) ?>
+      </p>
+    <?php
+    endif ?>
 
 
     <?= GridView::widget([
@@ -32,10 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
+                'visibleButtons' => [
+                    'update' => fn() => !Yii::$app->user->isGuest,
+                    'delete' => fn() => !Yii::$app->user->isGuest,
+                ],
                 'urlCreator' => function ($action, Post $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
